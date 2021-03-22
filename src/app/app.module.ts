@@ -7,7 +7,8 @@ import { AppComponent } from './app.component';
 import { HeroesComponent } from './heroes/heroes.component';
 import { HeroDetailComponent } from './hero-detail/hero-detail.component';
 import { ViewChildComponent } from './view-child/view-child.component';
-import { Child } from './view-child/view-child.component'
+import { Child } from './view-child/view-child.component';
+import { SharkDirective } from './directives/shark.directive'
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { Child } from './view-child/view-child.component'
     HeroesComponent,
     HeroDetailComponent,
     ViewChildComponent,
-    Child
+    Child,
+    SharkDirective
   ],
   imports: [
     BrowserModule,
