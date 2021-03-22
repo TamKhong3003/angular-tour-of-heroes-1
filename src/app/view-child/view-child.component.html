@@ -1,0 +1,6 @@
+<child id="1" *ngIf="shouldShow">Hi, im here!</child>
+<child id="2" *ngIf="!shouldShow">HI, im another one!</child>
+
+<button (click)="toggle()">Toggle</button>
+
+<div>Child selected: {{ selectedChild }}</div>
