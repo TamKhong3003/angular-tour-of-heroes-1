@@ -1,9 +1,9 @@
-import { Component, OnInit, Directive, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Directive, Input, ViewChild, AfterViewInit } from '@angular/core';
 
 import { SharkDirective } from '../directives/shark.directive';
 
-@Directive({ selector: 'child' })
-export class Child {
+@Directive({ selector: '[appChild]' })
+export class ChildDirective {
   @Input() id!: string;
 }
 
@@ -12,11 +12,11 @@ export class Child {
   templateUrl: './view-child.component.html',
   styleUrls: ['./view-child.component.scss']
 })
-export class ViewChildComponent implements OnInit {
+export class ViewChildComponent implements OnInit, AfterViewInit {
   friend: string;
 
-  @ViewChild(Child)
-  set child(directive: Child) {
+  @ViewChild(ChildDirective)
+  set appChild(directive: ChildDirective) {
     setTimeout(() => {
       this.selectedChild = directive.id;
     }, 0);
@@ -27,21 +27,21 @@ export class ViewChildComponent implements OnInit {
     this.friend = directive.friend;
   }
 
-  selectedChild: string = '';
-  shouldShow: boolean = true;
+  selectedChild = '';
+  shouldShow = true;
 
   constructor() { }
 
   ngOnInit(): void {
     // Does not wait for view to initialize.
-    console.log("ViewChild 2nd example before view initialized:", this.friend);
+    console.log('ViewChild 2nd example before view initialized:', this.friend);
   }
 
-  ngAfterViewInit() {
-    console.log("ViewChild 2nd example:", this.friend);
+  ngAfterViewInit(): void {
+    console.log('ViewChild 2nd example:', this.friend);
   }
 
-  toggle() {
+  toggle(): void {
     this.shouldShow = !this.shouldShow;
   }
 }

@@ -7,7 +7,7 @@ export class SharkDirective {
   friend = 'Human';
 
   constructor(el: ElementRef, renderer: Renderer2) {
-    let sharkPrefix = renderer.createText('Shark ');
+    const sharkPrefix = renderer.createText('Shark ');
     renderer.appendChild(el.nativeElement, sharkPrefix);
   }
 }
