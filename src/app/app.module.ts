@@ -8,6 +8,7 @@ import { HeroesComponent } from './heroes/heroes.component';
 import { HeroDetailComponent } from './hero-detail/hero-detail.component';
 import { ChildDirective, ViewChildComponent } from './view-child/view-child.component';
 import { SharkDirective } from './directives/shark.directive';
+import { MessagesComponent } from './messages/messages.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { SharkDirective } from './directives/shark.directive';
     HeroDetailComponent,
     ViewChildComponent,
     ChildDirective,
-    SharkDirective
+    SharkDirective,
+    MessagesComponent
   ],
   imports: [
     BrowserModule,
