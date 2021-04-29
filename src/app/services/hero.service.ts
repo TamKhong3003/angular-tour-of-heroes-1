@@ -25,7 +25,7 @@ export class HeroService {
         this.logger(`Fetched hero id=${id}.`);
       }),
       catchError(this.handleError<Hero>('getHero'))
-    )
+    );
   }
 
   getHeroes(): Observable<Hero[]> {
@@ -36,17 +36,17 @@ export class HeroService {
       catchError(this.handleError<Hero[]>('getHeroes', []))); // intercepts error only
   }
 
-  private logger(message: string) {
+  private logger(message: string): void {
     this.messageService.add(`[HeroService] ${message}`);
   }
 
-  private handleError<T>(operation = 'operation', result?: T) {
+  private handleError<T>(operation = 'operation', result?: T): (error: any) => Observable<T> {
     return (error: any): Observable<T> => {
-      console.error(error); //TODO: send error to remote logging infra instead of to the console
+      console.error(error); // TODO: send error to remote logging infra instead of to the console
 
-      this.logger(`Operation ${operation} failed: ${error.message}.`); //TODO: better message for end-user
+      this.logger(`Operation ${operation} failed: ${error.message}.`); // TODO: better message for end-user
 
       return of(result as T); // return empty / default result to keep app running
-    }
+    };
   }
 }

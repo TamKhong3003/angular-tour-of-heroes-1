@@ -32,7 +32,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     HttpClientModule,
     HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, { dataEncapsulation: false }
-      // intercepts http requests  
+      // intercepts http requests
       // return mock server responses
       // to be removed in favor of real server
     )

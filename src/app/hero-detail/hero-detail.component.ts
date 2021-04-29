@@ -29,7 +29,7 @@ export class HeroDetailComponent implements OnInit {
     this.id = Number(this.route.snapshot.paramMap.get('id'));
     this.heroService.getHero(this.id).subscribe((hero) => {
       this.hero = hero;
-    })
+    });
   }
 
   goBack(): void {
