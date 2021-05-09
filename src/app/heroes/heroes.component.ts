@@ -35,9 +35,16 @@ export class HeroesComponent implements OnInit {
     } else {
       this.heroService.addHero({ name } as Hero).subscribe(newHero => {
         if (newHero) {
-          this.heroes.push(newHero);
+          this.heroes.unshift(newHero);
         }
       });
     }
+  }
+
+  deleteHero(hero: Hero): void {
+    const index = this.heroes.indexOf(hero);
+    this.heroes.splice(index, 1);
+
+    this.heroService.deleteHero(hero.id).subscribe();
   }
 }

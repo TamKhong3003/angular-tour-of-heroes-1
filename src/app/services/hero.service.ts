@@ -27,11 +27,21 @@ export class HeroService {
       tap((_) => {
         this.logger(`Added hero name=${newHero.name}`);
       },
-        catchError(this.handleError<undefined>('addHero'))
+        catchError(this.handleError<any>('addHero'))
       ));
 
     // Test the handleError method
     // return throwError('just a joke').pipe(catchError(this.handleError<undefined>('addHero')));
+  }
+
+  deleteHero(heroId: number): Observable<any> {
+    const url = `${this.baseUrl}/${heroId}`;
+    return this.http.delete(url, this.httpOptions).pipe(
+      tap((_) => {
+        this.logger(`Delete hero id=${heroId}`);
+      }),
+      catchError(this.handleError<any>('deleteHero'))
+    );
   }
 
   getHero(id: number): Observable<Hero> {
@@ -70,7 +80,8 @@ export class HeroService {
     return (error: any): Observable<T> => {
       console.error(error); // TODO: send error to remote logging infra instead of to the console
 
-      this.logger(`Operation ${operation} failed: ${error.message || error}.`); // TODO: better message for end-user
+      this.logger(`Operation ${operation} failed: ${JSON.stringify(error.message, null, 2) || JSON.stringify(error, null, 2)}.`);
+      // TODO: better message for end-user
 
       return of(result as T); // return empty / default result to keep app running
     };
