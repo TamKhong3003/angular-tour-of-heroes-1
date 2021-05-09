@@ -27,4 +27,17 @@ export class HeroesComponent implements OnInit {
       this.heroes = heroes;
     });
   }
+
+  addHero(input: string): void {
+    const name = input.trim(); // prevent blank string
+    if (!name) {
+      return;
+    } else {
+      this.heroService.addHero({ name } as Hero).subscribe(newHero => {
+        if (newHero) {
+          this.heroes.push(newHero);
+        }
+      });
+    }
+  }
 }

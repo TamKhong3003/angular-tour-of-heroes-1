@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { Hero } from 'src/app/hero';
@@ -20,6 +20,19 @@ export class HeroService {
     private messageService: MessageService,
     private http: HttpClient
   ) { }
+
+  addHero(newHero: Hero): Observable<Hero> {
+    const body = newHero;
+    return this.http.post<Hero>(this.baseUrl, body, this.httpOptions).pipe(
+      tap((_) => {
+        this.logger(`Added hero name=${newHero.name}`);
+      },
+        catchError(this.handleError<undefined>('addHero'))
+      ));
+
+    // Test the handleError method
+    // return throwError('just a joke').pipe(catchError(this.handleError<undefined>('addHero')));
+  }
 
   getHero(id: number): Observable<Hero> {
     const url = `${this.baseUrl}/${id}`;
@@ -57,7 +70,7 @@ export class HeroService {
     return (error: any): Observable<T> => {
       console.error(error); // TODO: send error to remote logging infra instead of to the console
 
-      this.logger(`Operation ${operation} failed: ${error.message}.`); // TODO: better message for end-user
+      this.logger(`Operation ${operation} failed: ${error.message || error}.`); // TODO: better message for end-user
 
       return of(result as T); // return empty / default result to keep app running
     };
