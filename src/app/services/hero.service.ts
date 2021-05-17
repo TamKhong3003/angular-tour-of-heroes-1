@@ -21,14 +21,30 @@ export class HeroService {
     private http: HttpClient
   ) { }
 
+  searchHeroes(term: string): Observable<Hero[]> {
+    const url = `${this.baseUrl}/?name=${term}`;
+    if (!term.trim()) {
+      return of([]);
+    }
+
+    return this.http.get<Hero[]>(url).pipe(
+      tap((x) => {
+        return x.length
+          ? this.logger(`Found heroes matching "${term}".`)
+          : this.logger(`No heroes matching "${term}".`);
+      }),
+      catchError(this.handleError<Hero[]>('searchHeroes', []))
+    );
+  }
+
   addHero(newHero: Hero): Observable<Hero> {
     const body = newHero;
     return this.http.post<Hero>(this.baseUrl, body, this.httpOptions).pipe(
       tap((_) => {
         this.logger(`Added hero name=${newHero.name}`);
-      },
-        catchError(this.handleError<any>('addHero'))
-      ));
+      }),
+      catchError(this.handleError<any>('addHero'))
+    );
 
     // Test the handleError method
     // return throwError('just a joke').pipe(catchError(this.handleError<undefined>('addHero')));
@@ -38,7 +54,7 @@ export class HeroService {
     const url = `${this.baseUrl}/${heroId}`;
     return this.http.delete(url, this.httpOptions).pipe(
       tap((_) => {
-        this.logger(`Delete hero id=${heroId}`);
+        this.logger(`Deleted hero id=${heroId}`);
       }),
       catchError(this.handleError<any>('deleteHero'))
     );
